@@ -5,7 +5,7 @@ export interface ICurrencyOption {
   label: string;
 }
 
-export function loadCurrencies() {
+export function loadCurrencies(): Promise<ICurrencyOption[]> {
   const apicall = 'https://api.exchangerate.host/latest'
   //const apicall = `http://api.exchangeratesapi.io/v1/latest?access_key = ${process.env.APIKEY}`
 

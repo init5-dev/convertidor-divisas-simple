@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { loadCurrencies } from '@/libs/currency'
+import { ICurrencyOption, loadCurrencies } from '@/libs/currency'
 import Converter from '@/components/Converter'
 
 export default async function Home() {

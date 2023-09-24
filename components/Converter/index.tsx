@@ -6,7 +6,7 @@ import { ICurrencyOption } from '@/libs/currency';
 import styles from './styles.module.css'
 
 
-export default function Converter({ currencies }) {
+export default function Converter({ currencies }: {currencies: ICurrencyOption[]} ) {
 
   const [toCurrencies, setToCurrencies] = useState<ICurrencyOption[]>([...currencies.filter((item: ICurrencyOption) => item.label !== currencies[0].label)]);
   const [fromCurrency, setFromCurrency] = useState<ICurrencyOption>(currencies[0])
