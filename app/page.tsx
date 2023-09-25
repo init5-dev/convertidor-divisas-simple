@@ -7,7 +7,7 @@ export default async function Home() {
   const currencies = await loadCurrencies()
 
   return (
-    <main className="font-mono text-sm flex min-h-screen max-w-full items-center justify-center">
+    <main className="font-mono text-sm flex min-h-screen max-w-full justify-center">
       <Converter currencies={currencies} />
     </main>
   )

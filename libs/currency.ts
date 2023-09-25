@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export interface ICurrencyOption {
   value: number | undefined;
@@ -8,12 +8,14 @@ export interface ICurrencyOption {
 export const DefaultCurrencyOption: ICurrencyOption = {value: 1, label: 'EUR'}
 
 export function loadCurrencies(): Promise<ICurrencyOption[]> {
-  const apicall = 'https://api.exchangerate.host/latest'
-  //const apicall = `http://api.exchangeratesapi.io/v1/latest?access_key = ${process.env.APIKEY}`
-
   return new Promise(
     (resolve, reject) => {
-      axios.get(apicall).then(
+      let data = null
+      let apicall = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.APIKEY}`
+
+      data = axios.get(apicall)
+      
+      data.then(
         (response) => {
           const labels: string[] = Object.keys(response.data.rates)
           const values: number[] = Object.values(response.data.rates)
@@ -32,7 +34,10 @@ export function loadCurrencies(): Promise<ICurrencyOption[]> {
       )
         .catch(
           (error: Error) => {
-            reject(error)
+            console.log(error)
+            console.log('Probando con https://api.exchangerate.host/latest...')
+            apicall = 'https://api.exchangerate.host/latest'
+            return axios.get(apicall)
           }
         )
     }
