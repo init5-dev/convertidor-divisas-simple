@@ -7,11 +7,11 @@ export interface ICurrencyOption {
 
 export const DefaultCurrencyOption: ICurrencyOption = {value: 1, label: 'EUR'}
 
-export function loadCurrencies(): Promise<ICurrencyOption[]> {
+export function loadCurrencies(apikey: string = ""): Promise<ICurrencyOption[]> {
   return new Promise(
     (resolve, reject) => {
       let data = null
-      let apicall = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.APIKEY}`
+      let apicall = `http://api.exchangeratesapi.io/v1/latest?access_key=${apikey ? apikey : process.env.APIKEY}`
 
       data = axios.get(apicall)
       

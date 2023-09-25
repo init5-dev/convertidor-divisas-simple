@@ -7,7 +7,7 @@ import { ICurrencyOption, DefaultCurrencyOption } from '@/libs/currency';
 import styles from './styles.module.css'
 
 
-export default function Converter({ currencies }: { currencies: ICurrencyOption[] }) {
+export default function Converter({ currencies = [] }: { currencies: ICurrencyOption[]}) {
 
   const [toCurrencies, setToCurrencies] = useState<ICurrencyOption[]>([...currencies.filter((item: ICurrencyOption) => item.label !== currencies[0].label)]);
   const [fromCurrency, setFromCurrency] = useState<ICurrencyOption>(currencies[0])
@@ -53,30 +53,30 @@ export default function Converter({ currencies }: { currencies: ICurrencyOption[
         <div className={styles.mainBox}>
           <div className={styles.inputGroup}>
             <label>Cantidad</label>
-            <input className={styles.numericInput} type="number" step='0.5' value={amount} onChange={e => {setAmount(Number(e.target.value)); setResult(null)}} />
+            <input name='amount' className={styles.numericInput} type="number" step='0.5' value={amount} onChange={e => {setAmount(Number(e.target.value)); setResult(null)}} />
           </div>
 
           <div className={styles.selectGroup}>
             <div className={styles.inputGroup}>
               <label className={styles.label}>De</label>
-              <Select className={styles.input} value={fromCurrency} options={currencies} onChange={selectedFrom} />
+              <Select id="fromCurrency" name="fromCurrency" className={styles.input} value={fromCurrency} options={currencies} onChange={selectedFrom} />
             </div>
 
             <div className={styles.inputGroup}>
               <label className={styles.label}>A</label>
-              <Select className={styles.input} value={toCurrency} options={toCurrencies} onChange={selectedTo} />
+              <Select id="toCurrency" name="toCurrency" className={styles.input} value={toCurrency} options={toCurrencies} onChange={selectedTo} />
             </div>
           </div>
 
           <div className={styles.button} onClick={handleClick}>
-            <button>Convertir</button>
+            <button name="convert">Convertir</button>
           </div>
         </div>
       </div>
       {
         result && <div className={styles.resultBox}>
           <div className={styles.fromCurrency}>{`${amount.toFixed(2)} ${fromCurrency.label}`}</div>
-          <div className={styles.toCurrency}>{`= ${result} ${toCurrency.label}`}</div>
+          <div className={styles.toCurrency}>= <span id="result">{result}</span>{toCurrency.label}</div>
         </div>
       }
     </div>
