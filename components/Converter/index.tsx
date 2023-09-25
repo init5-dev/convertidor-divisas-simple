@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { ICurrencyOption } from '@/libs/currency';
+import { SingleValue, ActionMeta } from 'react-select';
+import { ICurrencyOption, DefaultCurrencyOption } from '@/libs/currency';
 import styles from './styles.module.css'
 
 
@@ -15,21 +16,30 @@ export default function Converter({ currencies }: {currencies: ICurrencyOption[]
   const [result, setResult] = useState<number | null>(null);
 
   function convert(from: ICurrencyOption, to: ICurrencyOption): number {
-    console.log(from.label + " " + from.value)
-    console.log(to.label + " " + to.value)
-    const amountInBase = amount * from.value
-    return Number((amountInBase * to.value).toFixed(2))
+    if(!from?.value) {
+      return 0
+    }
+
+    if(!to?.value) {
+      return 0
+    }
+    
+    const amountInBase = amount * from?.value
+    return Number((amountInBase * to?.value).toFixed(2))
   }
 
-  function selectedFrom(e) {
-    setFromCurrency({ ...e })
-    setToCurrencies([...currencies.filter((item: ICurrencyOption) => item.label !== e.label)])
+  function selectedFrom(newValue: SingleValue<ICurrencyOption>, actionMeta: ActionMeta<ICurrencyOption>) {
+    let value: ICurrencyOption = {label: newValue?.label, value: newValue?.value}
+
+    setFromCurrency(value)
+    setToCurrencies([...currencies.filter((item: ICurrencyOption) => item.label !== value.label)])
     setToCurrency({ ...toCurrencies[0] })
     setResult(null)
   }
 
-  function selectedTo(e) {
-    setToCurrency({ ...e })
+  function selectedTo(newValue: SingleValue<ICurrencyOption>, actionMeta: ActionMeta<ICurrencyOption>) {
+    let value: ICurrencyOption = {label: newValue?.label, value: newValue?.value}
+    setToCurrency({...value})
     setResult(null)
   }
 

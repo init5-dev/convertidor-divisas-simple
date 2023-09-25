@@ -1,9 +1,11 @@
 import axios from 'axios';
 
 export interface ICurrencyOption {
-  value: number;
-  label: string;
+  value: number | undefined;
+  label: string | undefined;
 }
+
+export const DefaultCurrencyOption: ICurrencyOption = {value: 1, label: 'EUR'}
 
 export function loadCurrencies(): Promise<ICurrencyOption[]> {
   const apicall = 'https://api.exchangerate.host/latest'
