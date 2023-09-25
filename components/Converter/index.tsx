@@ -76,7 +76,7 @@ export default function Converter({ currencies = [] }: { currencies: ICurrencyOp
       {
         result && <div className={styles.resultBox}>
           <div className={styles.fromCurrency}>{`${amount.toFixed(2)} ${fromCurrency.label}`}</div>
-          <div className={styles.toCurrency}>= <span id="result">{result}</span>{toCurrency.label}</div>
+          <div className={styles.toCurrency}>= <span id="result">{result}</span>{" " + toCurrency.label}</div>
         </div>
       }
     </div>
